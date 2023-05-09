@@ -31,11 +31,21 @@ function TodoApp() {
       completed: false,
     },
   ]);
+  const [warn, setmessage] = useState(false);
+  const addTodo = (title) => {
+    if (title === '') {
+      setmessage(true);
+    }
+    else {
+      setTodos(() => [...todos, { id: todos.length, title: title, completed: false }]);
+      setmessage(false);
+    }
+  }
   return (
     <div class="todos">
       <Todotitle />
-      <Todoform />
-      <span class="submit-warning">Please insert your todo list</span>
+      <Todoform addItem={addTodo} />
+      <span className={warn ? 'submit-warning' : 'd-none'} >Please insert your todo list</span>
       <Todolist todosProps={todos} setTodos={setTodos} />
     </div>
   );
