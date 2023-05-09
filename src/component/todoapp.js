@@ -1,43 +1,53 @@
+import { v4 as uuidv4 } from "uuid";
+import Todotitle from './todotitle';
+import Todoform from './todoform';
+import Todolist from './todolist';
+import { useState } from 'react';
+
 function TodoApp() {
+  const [message, setmessage] = useState('');
+  const [todos, setTodos] = useState([
+    {
+      id: uuidv4(),
+      title: 'Gather project requirements',
+      completed: true,
+    },
+    {
+      id: uuidv4(),
+      title: 'Feasibility study and Analysis',
+      completed: true,
+    },
+    {
+      id: uuidv4(),
+      title: 'Setup development environment',
+      completed: true,
+    },
+    {
+      id: uuidv4(),
+      title: 'Develop website and add content',
+      completed: false,
+    },
+    {
+      id: uuidv4(),
+      title: 'Deploy to live server',
+      completed: false,
+    },
+  ]);
+  const addTodo = (title) => {
+    if (title.trim()) {
+      setTodos(() => [...todos, { id: uuidv4(), title: title, completed: false }]);
+      setmessage('');
+    }
+    else {
+      setmessage('Please insert Your todo!');
+    }
+  }
   return (
     <div class="todos">
-      <header class="todo-header">
-        <h1>To do Applications</h1>
-        <p>Items will persist in the browser local storage</p>
-      </header>
-      <form class="form-container">
-        <input
-          type="text"
-          placeholder="Add Todo..."
-          class="input-text input-both"
-          value=""
-        />
-        <button class="input-submit">&#10010;</button>
-      </form>
-      <span class="submit-warning">Please insert your todo list</span>
-      <ul>
-        <li className="to-do-list">
-          <span>
-            <input type="checkbox" className="input-check" />
-            <span className="todo-selected">Osman Wako</span>
-          </span>
-          <button>Delete</button>
-        </li>
-        <li className="to-do-list">
-          <span>
-            <input type="checkbox" className="input-check" />
-            <span>Osman Wako</span>
-          </span>
-          <button>Delete</button>
-        </li>
-        <li className="to-do-list">
-          <span>
-            <input type="checkbox" className="input-check" />
-            <span>Osman Wako</span>
-          </span>
-          <button>Delete</button>
-        </li>
-      </ul>
+      <Todotitle />
+      <Todoform addItem={addTodo} />
+      <span className="submit-warning" >{message}</span>
+      <Todolist todosProps={todos} setTodos={setTodos} />
     </div>
   );
 }
