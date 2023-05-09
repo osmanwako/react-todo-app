@@ -1,26 +1,10 @@
-function Todolist() {
+import Todoitem from "./todoitem";
+
+function Todolist({ todosProps, setTodos }) {
     return <ul>
-        <li className="to-do-list">
-            <span>
-                <input type="checkbox" className="input-check" />
-                <span className="todo-selected">Osman Wako</span>
-            </span>
-            <button>Delete</button>
-        </li>
-        <li className="to-do-list">
-            <span>
-                <input type="checkbox" className="input-check" />
-                <span>Osman Wako</span>
-            </span>
-            <button>Delete</button>
-        </li>
-        <li className="to-do-list">
-            <span>
-                <input type="checkbox" className="input-check" />
-                <span>Osman Wako</span>
-            </span>
-            <button>Delete</button>
-        </li>
+        {todosProps.map((todo) => (
+            <Todoitem key={todo.id} itemProp={todo} setTodos={setTodos} />
+        ))}
     </ul>
 }
 export default Todolist;
